@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<style>
+  table {
+    width: 100%;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 15px;
+    text-align: left;
+  }
+  table tr:nth-child(even) {
+    background-color: #eee;
+  }
+  table tr:nth-child(odd) {
+   background-color: #fff;
+  }
+  table th {
+    background-color: #777;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<h1>Hubstaff Monitor: report for {{check_date}}</h1>
+<div>
+  {% if ordered_user_ids %}
+    <table>
+      <tr>
+        <th></th>  <!-- the (0, 0) cell -->
+        {% for user_id in ordered_user_ids %}
+          <th>{{ user_names[user_id] }}</th>
+        {% endfor %}
+      </tr>
+
+      {% for project_id, project_activity in activity_table.items() %}
+        <tr>
+          <th>{{ project_names[project_id] }}</th>
+          {% for user_id in ordered_user_ids %}
+            <td>{{ project_activity[user_id] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    No entries found.
+  {% endif %}
+</div>
+
+</body>
+</html>
